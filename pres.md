@@ -98,16 +98,43 @@ $$ f_n(s) = \left\{\begin{matrix}
 # Time complexity
 
 + Time complexity is **pseudo-polynomial**: $O(nP)$
-+ If all objects fit $\rightarrow$ P = $\sum_{i=0}^{n}p_i$ 
++ Theoretical upper bound of P $\rightarrow np_{max}$ 
 
 # Time complexity
 
-+ Time complexity is **pseudo-polynomial**: $O(nP)$
-+ If all objects fit $\rightarrow$ P = $\sum_{i=0}^{n}p_i$ 
++ Time complexity is **pseudo-polynomial**: $O(nP)$ 
++ Theoretical upper bound of P $\rightarrow np_{max}$ 
 + If P is small $\rightarrow$ *polynomial* time
 
-# FPTAS 
+# FPTAS - I
 
 + Fully-Polinomial time approximation scheme
 + Scale profits down so that time is polynomial
-+ Solve scaled instance of the problem
++ Solve scaled instance I of the problem 
++ Solution A(I) is a $\varepsilon$-approximation of the optimal solution
+
+$$ A(I) \geq (1-\varepsilon)OPT(I) $$ 
+
+# FPTAS - II
+
+given $\varepsilon$ > 0
+
+1. let $p_{max} = max\{p_0,...,p_n\}$
+
+2. let $K = \frac{\varepsilon p_{max}}{n}$
+
+3. for each object i, define $p_i' = \frac{p_i}{K}$
+
+4. Solve scaled instance with dynamic programming
+
+5. Return solution $S'$
+
+Time Complexity: $O(nP') = O(n * np_{max}') = O(n^2 * \frac{p_{max}}{K}) = O(n^3 * \frac{1}{\varepsilon})$
+
+
+# FPTAS - III
+
+$$ S' \geq (1-\varepsilon)OPT(I) $$
+
+## Proof
+Stocazz [http://math.mit.edu/~goemans/18434S06/knapsack-katherine.pdf]
