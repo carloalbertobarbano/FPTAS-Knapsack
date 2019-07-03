@@ -134,7 +134,35 @@ Time Complexity: $O(nP') = O(n * np_{max}') = O(n^2 * \frac{p_{max}}{K}) = O(n^3
 
 # FPTAS - III
 
-$$ S' \geq (1-\varepsilon)OPT(I) $$
+$$ P(S') \geq (1-\varepsilon)OPT(I) $$
 
-## Proof
-Stocazz [http://math.mit.edu/~goemans/18434S06/knapsack-katherine.pdf]
+## Proof 1/2
+
+- For every object *i*, $Kp_i' \leq p_i$
+- $p_i - Kp_i' = K$ **at most**
+- Be O the optimal set with the maximum profit $\rightarrow$ the maximum difference between the profit $P(O)$ of the original instance and the profit $P'(O)$ of the scaled instance is: $$(a.)\qquad P(O) - KP'(O) \leq nK$$
+- Be S' the solution of the scaled instance found by dynamic programming $\rightarrow P(S')$ at least as good as $KP'(O)$ 
+
+# FPTAS - III
+
+## Proof 2/2
+
+
+\begin{align}
+P(S') &\geq KP'(O) \\ 
+&\geq P(O) - nK \quad (for\ a.)\\
+& = OPT - \varepsilon p_{max}
+\end{align}
+
+\
+\
+\
+Since $OPT \geq p_{max}$
+
+$$OPT - \varepsilon p_{max} \geq OPT - \varepsilon OPT = (1-\varepsilon)OPT$$
+\
+\
+\
+And so
+$$P(S') \geq (1-\varepsilon)OPT$$
+
