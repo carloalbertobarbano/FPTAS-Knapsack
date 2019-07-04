@@ -1,10 +1,14 @@
 ---
 title:
-- FPTAS on 0/1 Knapsack 2
+- FPTAS - 0/1 Knapsack with Volume constraint
+author:
+- Barbano, Conforti, Gerbaldo
+theme:
+- Copenhagen
 ---
 
 
-# 0/1 Knapsack
+# 0/1 Knapsack - Simple version
 
 + n objects
 + $p_k$ profit for object k
@@ -35,7 +39,8 @@ $$ f_n(s) = \left\{\begin{matrix}
 p_n & s \geq w_n 
 \end{matrix}\right. $$
 
-## Time complexity: $O(nb)$ 
+## 
+**Time complexity: $O(nb)$**
 
 # 0/1 Knapsack with Volume constraint
 
@@ -43,27 +48,27 @@ p_n & s \geq w_n
 + $p_k$ profit for object k
 + $w_k$ weight of object k
 + $v_k$ volume of object k
-+ b tot. capacity
-+ V tot. volume
++ b tot. capacity,  V tot. volume
 
 Maximize $$z = \sum_{k=1}^{n}p_kx_k $$
 
-subject to: 
-$$\sum_{k=1}^{n}w_kx_k \leq b$$
-$$\sum_{k=1}^{n}v_kx_k \leq V$$
+subject to:
 
-$$ x_k \in {0,1} \  k=0,...,n$$
+\begin{align} 
+\sum_{k=1}^{n}w_kx_k \leq b & \\
+\sum_{k=1}^{n}v_kx_k \leq V, & \quad  x_k \in {0,1} \  k=0,...,n
+\end{align}
 
 # 0/1 Knapsack with Volume constraint - DP
 
-+ s = remaining capacity, remaining volume
++ s = $\langle$remaining capacity, remaining volume$\rangle$ (*s is a tuple*)
 + solution is $f_1(\langle b, V \rangle)$
 
 ## Recursion
 
 $$ f_k(s) = max \left\{\begin{matrix}
-p_k + f_{k+1} (s - \langle w_k, v_k \rangle) & x_k = 1\\ 
-f_{k+1}(s) & x_k = 0 
+f_{k+1} (s - \langle w_k, v_k \rangle) &+ p_k & x_k = 1\\ 
+f_{k+1}(s) & & x_k = 0 
 \end{matrix}\right. $$
 
 ## Base 
@@ -72,19 +77,20 @@ $$ f_n(s) = \left\{\begin{matrix}
 p_n & s \geq \langle w_n, v_n \rangle   
 \end{matrix}\right. $$
 
-## Time complexity: $O(nbV)$
+## 
+Time complexity: $O(nbV)$
 
-# 0/1 Knapsack - DP version 2
+# 0/1 Knapsack - DP alternative version
 
-+ recursion on profit
++ Recursion on profit
 + s = remaining units of profit (0...P)
-+ idea: find a set of objects with maximum total profit ($\leq s$) and $\langle$ weight, volume $\rangle$ $\leq$ $\langle b,V \rangle$ 
++ idea: find a set of objects with maximum total profit ($\leq s$) and $\langle$weight, volume$\rangle$ $\leq$ $\langle b,V \rangle$ 
 
 ## Recursion
 
 $$ f_k(s) = min \left\{\begin{matrix}
-\langle w_k, v_k \rangle + f_{k+1} (s - p_k) & x_k = 1\\ 
-f_{k+1}(s) & x_k = 0 
+f_{k+1} (s - p_k) &+ \langle w_k,v_k \rangle & x_k = 1\\ 
+f_{k+1}(s) & & x_k = 0 
 \end{matrix}\right. $$
 
 ## Base 
@@ -109,7 +115,7 @@ $$ f_n(s) = \left\{\begin{matrix}
 # FPTAS - I
 
 + Fully-Polinomial time approximation scheme
-+ Scale profits down so that time is polynomial
++ Scale profits down so that time is polynomial (scale factor $\varepsilon$)
 + Solve scaled instance I of the problem 
 + Solution A(I) is a $\varepsilon$-approximation of the optimal solution
 
@@ -123,13 +129,14 @@ given $\varepsilon$ > 0
 
 2. let $K = \frac{\varepsilon p_{max}}{n}$
 
-3. for each object i, define $p_i' = \frac{p_i}{K}$
+3. for each object i, define $p_i' = \lfloor \frac{p_i}{K} \rfloor$
 
 4. Solve scaled instance with dynamic programming
 
 5. Return solution $S'$
 
-Time Complexity: $O(nP') = O(n * np_{max}') = O(n^2 * \frac{p_{max}}{K}) = O(n^3 * \frac{1}{\varepsilon})$
+## Time Complexity 
+$$O(nP') = O(n * np_{max}') = O(n^2 * \frac{p_{max}}{K}) = O(n^3 * \frac{1}{\varepsilon})$$
 
 
 # FPTAS - III
@@ -138,7 +145,7 @@ $$ P(S') \geq (1-\varepsilon)OPT(I) $$
 
 ## Proof 1/2
 
-- For every object *i*, $Kp_i' \leq p_i$
+- For every object *i* $\rightarrow Kp_i' \leq p_i$
 - $p_i - Kp_i' = K$ **at most**
 - Be O the optimal set with the maximum profit $\rightarrow$ the maximum difference between the profit $P(O)$ of the original instance and the profit $P'(O)$ of the scaled instance is: $$(a.)\qquad P(O) - KP'(O) \leq nK$$
 - Be S' the solution of the scaled instance found by dynamic programming $\rightarrow P(S')$ at least as good as $KP'(O)$ 
