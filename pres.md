@@ -78,7 +78,7 @@ p_n & s \geq \langle w_n, v_n \rangle
 \end{matrix}\right. $$
 
 ## 
-Time complexity: $O(nbV)$
+**Time complexity:** $O(nbV)$
 
 # 0/1 Knapsack - DP alternative version
 
